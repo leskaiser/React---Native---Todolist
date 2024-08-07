@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "Weather-App-React-Native",
+    "slug": "wanztime-react-native",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "073c1c37-9d80-42d9-95b5-4e3baf1a6229"
+      }
+    },
+    "owner": "wanzou",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/073c1c37-9d80-42d9-95b5-4e3baf1a6229"
+    }
+  }
+}
