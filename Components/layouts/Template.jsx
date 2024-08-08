@@ -6,10 +6,13 @@ import {useState} from "react";
 import {todos} from "../data/data";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import {AddTodo} from "../home/AddTodo";
+import Dialog from "react-native-dialog";
 
 export const Template = callbackfn => {
   const [todosList, setTodoList] = useState(todos);
   const [selectedTab, setSelectedTab] = useState("all");
+  const [addDialogVisible, setAddDialogVisible] = useState(false);
+  const [inputValue, setInputValue] = useState("")
 
   const toggleTab = (tabName) => setSelectedTab(tabName)
   const updateTodo = (id) => {
@@ -17,21 +20,31 @@ export const Template = callbackfn => {
     newTodoList[todosList.findIndex(todo => todo.id === id)].isCompleted = !newTodoList[todosList.findIndex(todo => todo.id === id)].isCompleted;
     setTodoList(newTodoList)
   };
-  const deleteTodo = (id) =>{
-    Alert.alert("Delete", "Delete this task ?",[
+  const deleteTodo = (id) => {
+    Alert.alert("Delete", "Delete this task ?", [
       {
-        text:"Delete",
-        style:"destructive",
-        onPress:()=>{
+        text: "Delete",
+        style: "destructive",
+        onPress: () => {
           setTodoList(state => state.filter(todo => todo.id !== id))
         }
       },
       {
-        text:"Cancel",
-        style:"cancel"
+        text: "Cancel",
+        style: "cancel"
       }
     ])
   }
+
+  const saveTodo = () => {
+    setTodoList(state => {
+      const newTask = {id: state[state.length - 1].id + 1, title: inputValue, isCompleted: false};
+      showDialog();
+      return [...state, newTask];
+    })
+  }
+
+  const showDialog = () => setAddDialogVisible(!addDialogVisible);
 
   const countUpdate = todosList.reduce((acc, todo) => {
     todo.isCompleted ? ++acc.done : ++acc.inProgress;
@@ -46,18 +59,25 @@ export const Template = callbackfn => {
       case "done":
         return todosList.filter(todo => todo.isCompleted);
     }
-  }
+  };
 
   return (
-    <SafeAreaProvider style={style.topBar}>
-      <SafeAreaView style={style.container}>
-        <Header/>
-        <Body todosList={getFilteredTodo()} setCompleted={updateTodo} deleteTodo={deleteTodo}/>
-        <AddTodo/>
-      </SafeAreaView>
-      <Footer tab={selectedTab} onPressed={toggleTab} countData={countUpdate}/>
-    </SafeAreaProvider>
-
+    <>
+      <SafeAreaProvider style={style.topBar}>
+        <SafeAreaView style={style.container}>
+          <Header/>
+          <Body todosList={getFilteredTodo()} setCompleted={updateTodo} deleteTodo={deleteTodo}/>
+          <AddTodo toggleDialog={showDialog}/>
+        </SafeAreaView>
+        <Footer tab={selectedTab} onPressed={toggleTab} countData={countUpdate}/>
+      </SafeAreaProvider>
+      <Dialog.Container visible={addDialogVisible} onBackdropPress={() => setAddDialogVisible(!addDialogVisible)}>
+        <Dialog.Title>Create Task</Dialog.Title>
+        <Dialog.Description>Choose a name for new task</Dialog.Description>
+        <Dialog.Input onChangeText={(text) => setInputValue(text)}/>
+        <Dialog.Button label={"Save"} onPress={() => saveTodo()} disabled={inputValue.trim().length === 0}/>
+      </Dialog.Container>
+    </>
   )
 }
 
@@ -68,7 +88,7 @@ const style = StyleSheet.create({
     backgroundColor: "#252a2f"
   },
   topBar: {
-    flex:1,
+    flex: 1,
     backgroundColor: "#252a2f",
   }
 })

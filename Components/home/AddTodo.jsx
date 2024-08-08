@@ -1,8 +1,8 @@
 import {Platform, Pressable, StyleSheet, Text} from "react-native";
 
-export const AddTodo = () => {
+export const AddTodo = ({toggleDialog}) => {
   return (
-    <Pressable style={s.btn}>
+    <Pressable style={s.btn} onPress={toggleDialog}>
       <Text style={s.plus}>+</Text><Text style={s.btnText}> Add Todo</Text>
     </Pressable>
   )
