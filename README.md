@@ -38,7 +38,7 @@ Pour lancer l'application en mode développement, exécutez :
 Cela ouvrira Expo DevTools dans votre navigateur. Vous pouvez alors choisir d'exécuter l'application sur un émulateur, un simulateur ou un appareil physique en scannant le code QR avec l'application Expo Go.
 
 ## Demo
-<img src="./assets/screen1.png"><img src="./assets/screen2.png">
+<img src="./assets/screen1.png" width="50%"><img src="./assets/screen2.png" width="50%">
 
 ## Licence
 Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
